@@ -1,7 +1,8 @@
 import { useReducer } from 'react'
-import type { ReducerState, ReducerAction, Language } from '../types'
+import type { ReducerState, ReducerAction, Language, FromLanguage } from '../types'
+import { AUTO_LANGUAGE } from '../utils/constants'
 
-const initialState = {
+const initialState: ReducerState = {
   fromLanguage: 'auto',
   toLanguage: 'en',
   fromText: '',
@@ -15,6 +16,7 @@ function reducer (state: ReducerState, action: ReducerAction) {
   switch (type) {
     // LANGUAGES
     case 'INTERCHANGE_LANGUAGES': {
+      if (state.fromLanguage === AUTO_LANGUAGE) return state
       return {
         ...state,
         fromLanguage: state.toLanguage,
@@ -59,7 +61,7 @@ export function useTranslateReducer () {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const interchangeLanguages = () => { dispatch({ type: 'INTERCHANGE_LANGUAGES' }) }
-  const setFromLanguage = (payload: Language) => { dispatch({ type: 'SET_FROM_LANGUAGE', payload }) }
+  const setFromLanguage = (payload: FromLanguage) => { dispatch({ type: 'SET_FROM_LANGUAGE', payload }) }
   const setToLanguage = (payload: Language) => { dispatch({ type: 'SET_TO_LANGUAGE', payload }) }
   const setFromText = (payload: string) => { dispatch({ type: 'SET_FROM_TEXT', payload }) }
   const setResult = (payload: string) => { dispatch({ type: 'SET_RESULT', payload }) }
