@@ -39,6 +39,8 @@ export default function LanguageTextArea ({
   const handleSpeak = () => {
     const utterance = new SpeechSynthesisUtterance(value)
     utterance.lang = language === 'auto' ? 'en-GB' : SPEAKER_LANGUAGES[language]
+
+    speechSynthesis.cancel()
     speechSynthesis.speak(utterance)
   }
 
