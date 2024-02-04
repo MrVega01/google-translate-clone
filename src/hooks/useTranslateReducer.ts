@@ -17,35 +17,53 @@ function reducer (state: ReducerState, action: ReducerAction) {
     // LANGUAGES
     case 'INTERCHANGE_LANGUAGES': {
       if (state.fromLanguage === AUTO_LANGUAGE) return state
+      const loading = state.fromText !== ''
+
       return {
         ...state,
         fromLanguage: state.toLanguage,
-        toLanguage: state.fromLanguage
+        toLanguage: state.fromLanguage,
+        fromText: state.result,
+        result: '',
+        loading
       }
     }
     case 'SET_FROM_LANGUAGE': {
+      const loading = state.fromText !== ''
+
       return {
         ...state,
-        fromLanguage: action.payload
+        fromLanguage: action.payload,
+        result: '',
+        loading
       }
     }
     case 'SET_TO_LANGUAGE': {
+      const loading = state.fromText !== ''
+
       return {
         ...state,
-        toLanguage: action.payload
+        toLanguage: action.payload,
+        result: '',
+        loading
       }
     }
     // TEXTS
     case 'SET_FROM_TEXT': {
+      const loading = action.payload !== ''
+      const result = action.payload !== '' ? '' : state.result
       return {
         ...state,
-        fromText: action.payload
+        fromText: action.payload,
+        loading,
+        result
       }
     }
     case 'SET_RESULT': {
       return {
         ...state,
-        result: action.payload
+        result: action.payload,
+        loading: false
       }
     }
     case 'SET_LOADING': {
