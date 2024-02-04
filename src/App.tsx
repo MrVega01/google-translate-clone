@@ -6,6 +6,9 @@ import { ArrowsIcon } from './components/Icons'
 import LanguageSelector from './components/LanguageSelector'
 import { SelectionType } from './types.d'
 import LanguageTextArea from './components/LanguageTextArea'
+import { useEffect } from 'react'
+import translate from './services/translate'
+import useDebounce from './hooks/useDebounce'
 
 function App () {
   const {
@@ -17,8 +20,25 @@ function App () {
     setFromLanguage,
     setToLanguage,
     setFromText,
-    setResult
+    setResult,
+    loading
   } = useTranslateReducer()
+
+  const debounceFromText = useDebounce(fromText, 400)
+
+  useEffect(() => {
+    if (debounceFromText !== '') {
+      translate({ fromLanguage, toLanguage, text: fromText })
+        .then((response) => {
+          if (response == null) return
+          setResult(response)
+        })
+        .catch(() => {
+          setResult('Error')
+        })
+    }
+  }, [fromText, debounceFromText, fromLanguage, toLanguage])
+
   return (
     <Container fluid>
       <h1 className='text-center'>Google Translate</h1>
@@ -33,6 +53,7 @@ function App () {
             type={SelectionType.From}
             value={fromText}
             onChange={setFromText}
+            language={fromLanguage}
           />
         </Col>
         <Col xs='auto'>
@@ -53,7 +74,8 @@ function App () {
             type={SelectionType.To}
             value={result}
             onChange={setResult}
-            loading={false}
+            language={toLanguage}
+            loading={loading}
           />
         </Col>
       </Row>
