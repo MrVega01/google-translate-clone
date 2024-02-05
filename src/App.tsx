@@ -1,14 +1,15 @@
-import { Button, Col, Container, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 import './App.css'
 import { useTranslateReducer } from './hooks/useTranslateReducer'
 import { AUTO_LANGUAGE } from './utils/constants'
-import { ArrowsIcon } from './components/Icons'
+import { ArrowsIcon, GoogleLogoIcon } from './components/Icons'
 import LanguageSelector from './components/LanguageSelector'
 import { SelectionType } from './types.d'
 import LanguageTextArea from './components/LanguageTextArea'
 import { useEffect } from 'react'
 import translate from './services/translate'
 import useDebounce from './hooks/useDebounce'
+import IconButton from './components/IconButton'
 
 function App () {
   const {
@@ -24,7 +25,7 @@ function App () {
     loading
   } = useTranslateReducer()
 
-  const debounceFromText = useDebounce(fromText, 400)
+  const debounceFromText = useDebounce(fromText, 500)
 
   useEffect(() => {
     if (debounceFromText !== '') {
@@ -40,10 +41,12 @@ function App () {
   }, [fromText, debounceFromText, fromLanguage, toLanguage])
 
   return (
-    <Container fluid>
-      <h1 className='text-center'>Google Translate</h1>
+    <Container className='App'>
+      <h1 className='text-center'>
+        <GoogleLogoIcon/> Translate
+      </h1>
       <Row>
-        <Col>
+        <Col className='translateBox'>
           <LanguageSelector
             type={SelectionType.From}
             value={fromLanguage}
@@ -56,15 +59,14 @@ function App () {
             language={fromLanguage}
           />
         </Col>
-        <Col xs='auto'>
-          <Button
-            variant='link'
+        <Col xs='auto' className='p-0' >
+          <IconButton
+            icon={<ArrowsIcon />}
+            onClick={interchangeLanguages}
             disabled={fromLanguage === AUTO_LANGUAGE}
-            onClick={interchangeLanguages}>
-              <ArrowsIcon />
-          </Button>
+          />
         </Col>
-        <Col>
+        <Col className='translateBox'>
           <LanguageSelector
             type={SelectionType.To}
             value={toLanguage}

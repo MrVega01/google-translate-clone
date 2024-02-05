@@ -1,9 +1,23 @@
 #root {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+.App {
   min-height: 100vh;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
+  padding: 24px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+.App > h1 {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--color-textSecondary);
+}
+.App .translateBox {
+  display: flex;
+  justify-content: stretch;
+  flex-direction: column;
+  gap: 6px
 }
