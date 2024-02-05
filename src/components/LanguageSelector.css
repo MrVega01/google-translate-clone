@@ -1,0 +1,8 @@
+.LanguageSelector {
+  font-size: var(--font-lg);
+}
+.LanguageSelector:focus {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}

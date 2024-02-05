@@ -1,3 +1,4 @@
+import './LanguageSelector.css'
 import { Form } from 'react-bootstrap'
 import { AUTO_LANGUAGE, SUPPORTED_LANGUAGES } from '../utils/constants'
 import { SelectionType, type FromLanguage, type Language } from '../types.d'
@@ -18,6 +19,7 @@ export default function LanguageSelector ({ onChange, type, value }: Props) {
       onChange={handleChange}
       aria-label="Select language"
       value={value}
+      className='LanguageSelector'
     >
       {
         type === SelectionType.From && <option value={AUTO_LANGUAGE}>Detectar idioma</option>
