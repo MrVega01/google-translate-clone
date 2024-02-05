@@ -1,7 +1,11 @@
-import { Button, Form } from 'react-bootstrap'
+import './LanguageTextArea.css'
+import { Form } from 'react-bootstrap'
 import { type FromLanguage, type Language, SelectionType } from '../types.d'
 import { ClipboardIcon, SpeakerIcon } from './Icons'
 import { SPEAKER_LANGUAGES } from '../utils/constants'
+import { useRef } from 'react'
+import IconButton from './IconButton'
+import useDynamicHeight from '../hooks/useDynamicHeight'
 
 type Props =
   | {
@@ -26,6 +30,9 @@ export default function LanguageTextArea ({
   language,
   loading
 }: Props) {
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
+  useDynamicHeight({ ref: textAreaRef, value })
+
   const placeholder = type === SelectionType.From
     ? 'Insert text...'
     : !loading ? 'Translate' : 'Loading...'
@@ -43,9 +50,8 @@ export default function LanguageTextArea ({
     speechSynthesis.cancel()
     speechSynthesis.speak(utterance)
   }
-
   return (
-    <div className='position-relative'>
+    <div className={`position-relative LanguageTextArea ${type === SelectionType.To && 'readOnly'}`}>
       <Form.Control
         as='textarea'
         value={value}
@@ -53,31 +59,23 @@ export default function LanguageTextArea ({
         onChange={handleChange}
         readOnly={type === SelectionType.To}
         autoFocus={type === SelectionType.From}
-        style={{ height: 150, resize: 'none' }}
-        className={type === SelectionType.To ? 'bg-light' : ''}
+        ref={textAreaRef}
       />
       {
         value !== '' && (
-          <div
-            className='position-absolute d-flex'
-            style={{ left: 0, bottom: 0 }}
-          >
+          <div className='position-absolute d-flex'>
             {
               type === SelectionType.To && (
-                <Button
-                  variant='link'
+                <IconButton
+                  icon={<ClipboardIcon />}
                   onClick={handleClipboard}
-                >
-                  <ClipboardIcon />
-                </Button>
+                />
               )
             }
-            <Button
-              variant='link'
+            <IconButton
+              icon={<SpeakerIcon />}
               onClick={handleSpeak}
-            >
-              <SpeakerIcon />
-            </Button>
+            />
           </div>
         )
       }

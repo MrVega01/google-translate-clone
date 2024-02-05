@@ -1,0 +1,8 @@
+.IconButton {
+  fill: var(--color-textSecondary);
+  border-radius: 50vw !important;
+  padding: 6px 7px !important;
+}
+.IconButton:hover {
+  background-color: var(--color-hoverSecondary) !important;
+}
