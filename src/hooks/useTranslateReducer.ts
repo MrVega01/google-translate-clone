@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 import type { ReducerState, ReducerAction, Language, FromLanguage } from '../types'
-import { AUTO_LANGUAGE } from '../utils/constants'
+import { AUTO_LANGUAGE, DEFAULT_LANGUAGES } from '../utils/constants'
 
 const initialState: ReducerState = {
   fromLanguage: 'auto',
@@ -18,32 +18,45 @@ function reducer (state: ReducerState, action: ReducerAction) {
     case 'INTERCHANGE_LANGUAGES': {
       if (state.fromLanguage === AUTO_LANGUAGE) return state
       const loading = state.fromText !== ''
+      const fromText = state.loading ? state.fromText : state.result
 
       return {
         ...state,
         fromLanguage: state.toLanguage,
         toLanguage: state.fromLanguage,
-        fromText: state.result,
+        fromText,
         result: '',
         loading
       }
     }
     case 'SET_FROM_LANGUAGE': {
+      const toLanguage = action.payload === state.toLanguage
+        ? action.payload === DEFAULT_LANGUAGES[0]
+          ? DEFAULT_LANGUAGES[1] as Language
+          : DEFAULT_LANGUAGES[0] as Language
+        : state.toLanguage
       const loading = state.fromText !== ''
 
       return {
         ...state,
+        toLanguage,
         fromLanguage: action.payload,
         result: '',
         loading
       }
     }
     case 'SET_TO_LANGUAGE': {
+      const fromLanguage = action.payload === state.fromLanguage
+        ? action.payload === DEFAULT_LANGUAGES[0]
+          ? DEFAULT_LANGUAGES[1] as Language
+          : DEFAULT_LANGUAGES[0] as Language
+        : state.fromLanguage
       const loading = state.fromText !== ''
 
       return {
         ...state,
         toLanguage: action.payload,
+        fromLanguage,
         result: '',
         loading
       }
@@ -51,12 +64,11 @@ function reducer (state: ReducerState, action: ReducerAction) {
     // TEXTS
     case 'SET_FROM_TEXT': {
       const loading = action.payload !== ''
-      const result = action.payload !== '' ? '' : state.result
       return {
         ...state,
         fromText: action.payload,
         loading,
-        result
+        result: ''
       }
     }
     case 'SET_RESULT': {
