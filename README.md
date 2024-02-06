@@ -1,30 +1,31 @@
-# React + TypeScript + Vite
+# Google Translate Clone built with React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Translations works with Cohere IA API, that's not the best choice to make translations, but it's a free alternative, works in most cases but only support 5 translations per minute.
 
-Currently, two official plugins are available:
+## How start the project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+### Clone the project
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+git clone https://github.com/MrVega01/google-translate-clone.git
+```
+```
+cd ./google-translate-clone
+```
+### Install dependencies
+```
+npm install
+```
+### Add Cohere API KEY in a .env root file 
+```
+VITE_COHERE_API_KEY=<YOUR_API_KEY>
+```
+### Start the project locally
+```
+npm run dev
+```
+## You can also check the project here (remember, only support 5 translates per minute)
+```
+https://google-translate-clone-eight.vercel.app/
+```
+## Sample
+![image](https://github.com/MrVega01/google-translate-clone/assets/80730893/c6e9b521-a118-43ea-8b21-32252dd101f7)
