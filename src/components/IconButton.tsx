@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap'
 interface Props {
   onClick: (event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   icon: JSX.Element
-  disabled: boolean
+  disabled?: boolean
 }
 
 export default function IconButton ({

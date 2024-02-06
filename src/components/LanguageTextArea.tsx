@@ -2,7 +2,7 @@ import './LanguageTextArea.css'
 import { Form } from 'react-bootstrap'
 import { type FromLanguage, type Language, SelectionType } from '../types.d'
 import { ClipboardIcon, SpeakerIcon } from './Icons'
-import { SPEAKER_LANGUAGES } from '../utils/constants'
+import { AUTO_LANGUAGE, SPEAKER_LANGUAGES } from '../utils/constants'
 import { useRef } from 'react'
 import IconButton from './IconButton'
 import useDynamicHeight from '../hooks/useDynamicHeight'
@@ -45,7 +45,7 @@ export default function LanguageTextArea ({
   }
   const handleSpeak = () => {
     const utterance = new SpeechSynthesisUtterance(value)
-    utterance.lang = language === 'auto' ? 'en-GB' : SPEAKER_LANGUAGES[language]
+    utterance.lang = language === AUTO_LANGUAGE ? 'en-GB' : SPEAKER_LANGUAGES[language]
 
     speechSynthesis.cancel()
     speechSynthesis.speak(utterance)

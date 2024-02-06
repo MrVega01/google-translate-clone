@@ -35,7 +35,7 @@ function App () {
           setResult(response)
         })
         .catch(() => {
-          setResult('Error')
+          setResult('You can only do 5 translations per minute!')
         })
     }
   }, [fromText, debounceFromText, fromLanguage, toLanguage])
